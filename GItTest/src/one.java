@@ -1,4 +1,4 @@
-package damagoci;
+
 
 import java.util.Scanner;
 
