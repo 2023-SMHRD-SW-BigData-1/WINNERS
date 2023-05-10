@@ -6,19 +6,31 @@ public class TamagochiDTO {
 	private int love;
 	private int exp;
 	private int score;
+	private int level;
 	private String id;
 	private String pw;
 	
 	
-	public TamagochiDTO(int hungry, int hp, int love, int exp, int score, String id, String pw) {
+	public TamagochiDTO(int hungry, int hp, int love, int exp, int score, int level ,String id, String pw) {
 		super();
 		this.hungry = hungry;
 		this.hp = hp;
 		this.love = love;
 		this.exp = exp;
 		this.score = score;
+		this.level = level;
 		this.id = id;
 		this.pw = pw;
+	}
+
+	
+	public int getLevel() {
+		return level;
+	}
+
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 
