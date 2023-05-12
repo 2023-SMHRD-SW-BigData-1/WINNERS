@@ -4,7 +4,7 @@ import java.util.Random;
 public class Tamagochi_controll {
 	Random ran = new Random();
 	TamagochiDTO tama = new TamagochiDTO("", 0, 1, 100, 50, 100, 0);
-
+	
 	public int situation() {
 		int percent = ran.nextInt(10) + 1;
 		int situ = 0;
@@ -27,8 +27,8 @@ public class Tamagochi_controll {
 
 	public void play() {
 		tama.setHungry(tama.getHungry() - 5);
-		tama.setLove(tama.getLove() + 5);
-		tama.setExp(tama.getExp()+5);
+		tama.setLove(tama.getLove() + 20);
+		tama.setExp(tama.getExp()+20);
 	}
 
 	public int feed() {
@@ -48,12 +48,12 @@ public class Tamagochi_controll {
 		int num = ran.nextInt(100) + 1 +tama.getLevel()+tama.getLove()/100;
 		int count = 0;
 		if (num < 30) {
-			tama.setHp(tama.getHp() - 25);
+			tama.setHp(tama.getHp() - 20);
 			tama.setLove(tama.getLove() - 10);
 		} else if (num >= 30) {
 			count++;
-			tama.setExp(tama.getExp() + 100);
-			tama.setLove(tama.getLove() + 10);
+			tama.setExp(tama.getExp() + 50);
+			tama.setLove(tama.getLove() + 30);
 		} else if (a) {
 			tama.setHp(tama.getHp() - 10);
 			tama.setLove(tama.getLove() - 10);
@@ -62,13 +62,13 @@ public class Tamagochi_controll {
 	}
 
 	public void rest() {
-		tama.setHp(tama.getHp()+5);
+		tama.setHp(tama.getHp()+15);
 
 	}
 
 	public boolean die() {
 		boolean result = false;
-		if (tama.getHungry() == 0 || tama.getLove() == 0 ||tama.getHp()==0) {
+		if (tama.getHungry() <= 0 || tama.getLove() <= 0 ||tama.getHp()<=0) {
 			
 			result = true;
 		}

@@ -11,7 +11,6 @@ public class TamagochiDAO {
 	PreparedStatement psmt = null;
 	int row = 0;
 	ResultSet rs = null;
-	
 
 	// DB연결 메소드
 	public void getConn() {
@@ -23,7 +22,6 @@ public class TamagochiDAO {
 			String db_pw = "123123";
 
 			conn = DriverManager.getConnection(url, db_id, db_pw);
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,7 +31,7 @@ public class TamagochiDAO {
 //------------------------------------------getConn메소드 끝-----------------------------
 	// DB연결 종료 메소드
 	public void getClose() {
-		
+
 		try {// --->예외 처리
 			if (psmt != null)
 				psmt.close();
@@ -61,7 +59,7 @@ public class TamagochiDAO {
 
 			row = psmt.executeUpdate();
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			getClose();
@@ -81,34 +79,32 @@ public class TamagochiDAO {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
-			
+
 			rs = psmt.executeQuery();
-			if(rs.next()) {//중복이 없다는 가정하에 if문도 사용 가능!
+			if (rs.next()) {// 중복이 없다는 가정하에 if문도 사용 가능!
 				String s_id = rs.getString(1);
 				String s_pw = rs.getString(2);
 				String s_name = rs.getString(3);
-				
-				
+
 				udto = new UserDTO(s_id, s_pw, s_name);
-				
+
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			getClose();
 		}
 		return udto;
 	}
 
-	
-	public TamagochiDTO startRecord(TamagochiDTO tdto) {
-		getConn();
-		String sql = "insert into digimon_status values(?, ?, ?, ?, ?, ?, ?)";
+	//초기데이터 저장
+	public int startRecord(TamagochiDTO tdto) {
+		int row = 0;
 		try {
-			psmt =  conn.prepareStatement(sql);
+			getConn();
+			String sql = "insert into digimon_status values(?, ?, ?, ?, ?, ?, ?)";
+			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, tdto.getId());
 			psmt.setInt(2, tdto.getExp());
 			psmt.setInt(3, tdto.getLevel());
@@ -116,61 +112,120 @@ public class TamagochiDAO {
 			psmt.setInt(5, tdto.getLove());
 			psmt.setInt(6, tdto.getHp());
 			psmt.setInt(7, tdto.getScore());
-			
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-			String s_id = rs.getString(1);
-			int s_exp = rs.getInt(2);
-			int s_level = rs.getInt(3);
-			int s_hungry = rs.getInt(4);
-			int s_love = rs.getInt(5);
-			int s_hp = rs.getInt(6);
-			int s_score = rs.getInt(7);
-			
-			tdto = new TamagochiDTO(s_id, s_exp, s_level, s_hungry, s_love, s_hp, s_score);
-			}
-			
-			
+
+			row = psmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			getClose();
-			
+
+		}
+		return row;
+
+	}
+
+	//데이터 불러오기....
+	public TamagochiDTO recallData(String id) {
+		TamagochiDTO tdto = null;
+		try {
+			getConn();
+			String sql = "select*from digimon_status where id = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, id);
+
+			rs = psmt.executeQuery();// result set ==>값을 반환하는 역할
+			rs.next();
+			tdto = new TamagochiDTO(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4),rs.getInt(5),rs.getInt(6),rs.getInt(7));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			getClose();
 		}
 		return tdto;
-		
-		
+
 	}
 	
-	public void record() {
-		
-	}
-	
-	
-	
-	
-	
-	public UserDTO selectOne(String id) {
+	//진행 데이터 저장
+	public int updateData(int exp, int level, int hungry, int love, int hp, int score, String id) {
+		int row = 0;
 		getConn();
-		String sql = "select*from digimon_status where id = ?";
-		UserDTO mdto = null;
+		String sql = "update digimon_status set 경험치 = ?, 레벨 = ?, 포만도 = ?, 애정도 = ?, 체력 = ?, 점수 = ? where id = ?";
+		try {
+			// sql문이 통과 할 수 잇는 통로 열었습니다
+			psmt = conn.prepareStatement(sql);
+			// ?채워주기
+			psmt.setInt(1, exp);
+			psmt.setInt(2, level);
+			psmt.setInt(3, hungry);
+			psmt.setInt(4, love);
+			psmt.setInt(5, hp);
+			psmt.setInt(6, score);
+			psmt.setString(7, id);
+			// sql문 통과시키기
+			row = psmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			getClose();
+		}
+		return row;
+	}
+
+	//점수 불러오기
+	
+	public ArrayList<TamagochiDTO> finalScore() {
+		getConn();
+		ArrayList<TamagochiDTO> tarr = new ArrayList<>();
+		String sql = "select ID, 점수 from digimon_status order by 점수 desc";
+		TamagochiDTO tdto = null;
 		try {
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, id);
-			
-			rs = psmt.executeQuery();//result set ==>값을 반환하는 역할
-			rs.next();
-			mdto = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3));
-			
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+			String id = rs.getString(1);	
+			int score = rs.getInt(2);
+			tdto = new TamagochiDTO(id, score, score, score, score, score, score);
+			tarr.add(tdto);
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			getClose();
 		}
-		return mdto;
+		return tarr;
 		
+	}
+	
+	
+	
+	
+	
+	public TamagochiDTO selectOne(String id) {
+		getConn();
+		String sql = "select*from digimon_status where id = ?";
+		TamagochiDTO tdto = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, id);
+
+			rs = psmt.executeQuery();// result set ==>값을 반환하는 역할
+			rs.next();
+			tdto = new TamagochiDTO(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			getClose();
+		}
+		return tdto;
+
 	}
 
 }
