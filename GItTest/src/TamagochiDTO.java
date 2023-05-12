@@ -1,88 +1,27 @@
 
 public class TamagochiDTO {
 
-	private int hungry;
-	private int hp;
-	private int love;
-	private int exp;
-	private int score;
-	private int level;
 	private String id;
-	private String pw;
+	private int exp;
+	private int level;
+	private int hungry;
+	private int love;
+	private int hp;
+	private int score;
+
 	
-	
-	public TamagochiDTO(int hungry, int hp, int love, int exp, int score, int level ,String id, String pw) {
+
+	public TamagochiDTO(String id, int exp, int level, int hungry, int love, int hp, int score) {
 		super();
-		this.hungry = hungry;
-		this.hp = hp;
-		this.love = love;
-		this.exp = exp;
-		this.score = score;
-		this.level = level;
 		this.id = id;
-		this.pw = pw;
-	}
-
-	
-	public int getLevel() {
-		return level;
-	}
-
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-
-	public int getHungry() {
-		return hungry;
-	}
-
-
-	public void setHungry(int hungry) {
-		this.hungry = hungry;
-	}
-
-
-	public int getHp() {
-		return hp;
-	}
-
-
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-
-
-	public int getLove() {
-		return love;
-	}
-
-
-	public void setLove(int love) {
-		this.love = love;
-	}
-
-
-	
-	public int getExp() {
-		return exp;
-	}
-
-
-	public void setExp(int exp) {
 		this.exp = exp;
-	}
-
-
-	public int getScore() {
-		return score;
-	}
-
-
-	public void setScore(int score) {
+		this.level = level;
+		this.hungry = hungry;
+		this.love = love;
+		this.hp = hp;
 		this.score = score;
 	}
+
 
 
 	public String getId() {
@@ -90,24 +29,83 @@ public class TamagochiDTO {
 	}
 
 
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
 
-	public String getPw() {
-		return pw;
+
+	public int getExp() {
+		return exp;
 	}
 
 
-	public void setPw(String pw) {
-		this.pw = pw;
+
+	public void setExp(int exp) {
+		this.exp = exp;
 	}
-	
-	
-	
+
+
+
+	public int getLevel() {
+		return level;
+	}
+
+
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+
+
+	public int getHungry() {
+		return hungry;
+	}
+
+
+
+	public void setHungry(int hungry) {
+		this.hungry = hungry;
+	}
+
+
+
+	public int getLove() {
+		return love;
+	}
+
+
+
+	public void setLove(int love) {
+		this.love = love;
+	}
+
+
+
+	public int getHp() {
+		return hp;
+	}
+
+
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 	
-	
-	
+
 }
