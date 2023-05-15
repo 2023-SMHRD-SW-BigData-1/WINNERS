@@ -206,6 +206,8 @@ public class TamagochiDAO {
 	
 	
 	
+	
+	
 	public TamagochiDTO selectOne(String id) {
 		getConn();
 		String sql = "select*from digimon_status where id = ?";

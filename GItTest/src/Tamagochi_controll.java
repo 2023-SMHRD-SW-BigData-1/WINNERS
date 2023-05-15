@@ -4,6 +4,7 @@ import java.util.Random;
 public class Tamagochi_controll {
 	Random ran = new Random();
 	TamagochiDTO tama = new TamagochiDTO("", 0, 1, 100, 50, 100, 0);
+	MusicController mc = new MusicController();
 	
 	public int situation() {
 		int percent = ran.nextInt(10) + 1;
@@ -118,6 +119,20 @@ public class Tamagochi_controll {
 		return score;
 		
 		
+		
+	}
+	
+	public void revolutionMusic(int level) {
+		if(level ==4||level ==7||level ==10) {
+			mc.stop();
+			mc.play(1);
+		}
+	}
+	
+	public void openingMusic() {
+		
+			mc.stop();
+			mc.play(0);
 		
 	}
 }
