@@ -333,28 +333,33 @@ public class Tamagochi_main {
 			}
 			System.out.println();
 			System.out.println();
-
+			System.out.println("=================================================");
+			System.out.print("                ");
 			switch (tc.situation()) {
 			case 1:
-				System.out.println("적이 나타났다");
+				System.out.println("적이 나타났다!!!!!!");
 				a = !a;
 				break;
 			case 2:
-				System.out.println("놀아줘");
+				System.out.println("디지몬이 심심해 합니다!!");
 				break;
 			case 3:
-				System.out.println("배고파");
+				System.out.println("디지몬이 배고파 합니다..");
 				break;
 			}
-
-			System.out.printf("===============[%s]================\n", name);
+			System.out.println("=================================================");
+			System.out.printf("=======================[%s]=======================\n", name);
 			System.out.printf("레벨 : %d\n", tc.status().getLevel());
 			System.out.printf("포만도 : %d / %d\n", tc.status().getHungry(), hungry);
 			System.out.printf("애정도 : %d \n", tc.status().getLove());
 			System.out.printf("경험치 : %d / %d\n", tc.status().getExp(), 100);
 			System.out.printf("체력 : %d / %d\n", tc.status().getHp(), hp);
 			score = tc.getScore();
+			System.out.println("=================================================");
+			System.out.println();
 			System.out.println("[1] 놀아주기 [2] 밥주기 [3] 전투 [4] 휴식 [5] 종료");
+			System.out.println();
+			System.out.println("=================================================");
 			num = sc.nextInt();
 
 			if (num == 1) {
@@ -467,18 +472,18 @@ public class Tamagochi_main {
 			//tc.revolutionMusic(tc.status().getLevel());
 			boolean result = tc.die();
 			if (result) {
+				
+				System.out.println("=================================================");
 				System.out.println("디지몬이 죽었습니다.");
 				System.out.println("GAME OVER");
+				System.out.println("=================================================");
 				break;
 			}
 
 		}
 		int temp = tdao.updateData(tc.status().getExp(), tc.status().getLevel(), tc.status().getHungry(),
 				tc.status().getLove(), tc.status().getHp(), score, login.getId());
-		if (temp > 0) {
-			System.out.println("데이터 저장 성공");
-			System.out.println("게임을 종료합니다.");
-		}
+		
 		
 		System.out.println("===============RANKING=================");
 		System.out.println("USER\tSCORE\n");
